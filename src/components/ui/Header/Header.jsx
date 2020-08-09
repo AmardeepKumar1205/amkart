@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   menuButton: {
     marginRight: theme.spacing(2),
   },
-  title: {
+  gutter: {
     flexGrow: 1,
   },
   toolbarMargin: {
@@ -110,13 +110,10 @@ const Header = (props) => {
       <ElevationScroll>
         <AppBar position="fixed">
           <Toolbar>
-            <Typography
-              variant="h6"
-              className={classes.title}
-              onClick={() => handleButtonClick("/")}
-            >
+            <Typography variant="h6" onClick={() => handleButtonClick("/")}>
               AmKart
             </Typography>
+            <div className={classes.gutter}></div>
             {isMobile ? (
               <>
                 <IconButton
