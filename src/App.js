@@ -1,8 +1,54 @@
-import React from "react";
-import "./App.css";
+import React, { useState } from "react";
+import { ThemeProvider } from "@material-ui/styles";
+import { Route, Switch, Redirect, withRouter } from "react-router-dom";
 
-function App() {
-  return <></>;
-}
+import theme from "./Theme";
+import Header from "./components/ui/Header/Header";
+import Auth from "./components/containers/Auth/Auth";
+import Home from "./components/containers/Home/Home";
+import Checkout from "./components/containers/Checkout/Checkout";
+import Orders from "./components/containers/Orders/Orders";
+import ShoppingCart from "./components/containers/ShoppingCart/ShoppingCart";
+import Logout from "./components/containers/Auth/Logout/Logout";
 
-export default App;
+const App = (props) => {
+  const [auth, setAuth] = useState(true);
+
+  let routes = (
+    <Switch>
+      <Route path="/login" render={(props) => <Auth {...props} />} />
+      <Route
+        path="/shoppingCart"
+        render={(props) => <ShoppingCart {...props} />}
+      />
+      <Route path="/" excat render={(props) => <Home {...props} />} />
+      <Redirect to="/" />
+    </Switch>
+  );
+
+  if (auth) {
+    routes = (
+      <Switch>
+        <Route path="/checkout" render={(props) => <Checkout {...props} />} />
+        <Route path="/orders" render={(props) => <Orders {...props} />} />
+        <Route path="/logout" render={(props) => <Logout {...props} />} />
+        <Route path="/login" render={(props) => <Auth {...props} />} />
+        <Route
+          path="/shoppingCart"
+          render={(props) => <ShoppingCart {...props} />}
+        />
+        <Route path="/" excat render={(props) => <Home {...props} />} />
+        <Redirect to="/" />
+      </Switch>
+    );
+  }
+
+  return (
+    <ThemeProvider theme={theme}>
+      <Header auth={auth} />
+      {routes}
+    </ThemeProvider>
+  );
+};
+
+export default withRouter(App);
